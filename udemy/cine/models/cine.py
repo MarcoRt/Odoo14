@@ -32,6 +32,14 @@ class Cine(models.Model):
         string="Estados",
         copy=False,
     )
+    peliculas_ids = fields.Many2many(
+        comodel_name="presupuesto",
+        relation="cine_peliculas_relation",
+        column1="cine_id",
+        column2="peliculas_id",
+        string="Películas",
+        copy=False
+    )
     def aprobar_cine(self):
         logger.info("Se cambió el state a aprobado")
         self.state = "aprobado"

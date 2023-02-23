@@ -15,22 +15,30 @@
 						<group>
 							<field name="name"/>
 							<field name="salas"/>
-							<field name="fecha_aprobado" readonly="1"/>
-									<field name="fecha_creacion" readonly="1"/>
 						</group>
 						<group>
-							
+							<field name="fecha_aprobado" readonly="1"/>
+							<field name="fecha_creacion" readonly="1"/>
 						</group>
 					</group>
 					<separator string="Películas en este cine"/>
 					<notebook>
 						<page string="Peliculas">
 							<group>
-								<group>
-									
-								</group>
+								<group></group>
 								<group></group>
 							</group>
+							<field name="peliculas_ids" domain="[('state','=','aprobado')]">
+								<tree>
+									<control>
+										<create name="add_movie_control" string="Agregar película"/>
+									</control>
+									<field name="name" readonly="1"/>
+									<field name="fecha_estreno" readonly="1"/>
+									<field name="vista_general" readonly="1"/>
+									<field name="director_id" readonly="1"/>
+								</tree>
+							</field>
 						</page>
 					</notebook>
 				</sheet>
