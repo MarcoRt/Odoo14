@@ -15,14 +15,39 @@
 						<group>
 							<field name="name"/>
 							<field name="salas"/>
+							<field name="fecha_aprobado" readonly="1"/>
+									<field name="fecha_creacion" readonly="1"/>
 						</group>
 						<group>
-							<field name="fecha_aprobado"/>
-							<field name="fecha_creacion"/>
+							
 						</group>
 					</group>
+					<separator string="Películas en este cine"/>
+					<notebook>
+						<page string="Peliculas">
+							<group>
+								<group>
+									
+								</group>
+								<group></group>
+							</group>
+						</page>
+					</notebook>
 				</sheet>
 			</form>
+		</field>
+	</record>
+	<record id="view_presupuesto_tree" model="ir.ui.view">
+		<field name="name">Vista lista de cines</field>
+		<field name="model">cine</field>
+		<field name="arch" type="xml">
+			<tree decoration-danger="state == 'cancelado'" decoration-success="state == 'aprobado'">
+				<field name="name"/>
+				<field name="salas"/>
+				<field name="fecha_creacion"/>
+				<field name="fecha_creacion"/>
+				<field name="state" widget="badge" decoration-success="state == 'aprobado'" decoration-danger="state == 'cancelado'"/>
+			</tree>
 		</field>
 	</record>
 </odoo>
