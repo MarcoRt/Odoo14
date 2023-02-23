@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="action_open_cines" model="ir.actions.act_window">
+        <field name="name">Cine</field>
+        <field name="res_model">cine</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <!-- Menú para mostrar los cines -->
+    <menuitem id="menu_horizontal_cine" name="Cines" parent="peliculas.menu_principal" action="action_open_cines"/>
+</odoo>
