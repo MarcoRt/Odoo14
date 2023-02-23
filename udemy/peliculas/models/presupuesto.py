@@ -11,7 +11,8 @@ logger = logging.getLogger(__name__)
 
 class Presupuesto(models.Model):
     _name = "presupuesto"
-    _inherit = ["image.mixin",'mail.activity.mixin','mail.thread']
+    _description = "Presupuesto de las películas"
+    _inherit = ["image.mixin", "mail.activity.mixin", "mail.thread"]
 
     @api.depends("detalle_ids")
     def _compute_total(self):
@@ -20,9 +21,8 @@ class Presupuesto(models.Model):
             for linea in record.detalle_ids:
                 total += linea.importe
             record.base = total
-            record.impuestos = total*0.16
+            record.impuestos = total * 0.16
             record.total = record.base + record.impuestos
-
 
     name = fields.Char(string="Película")
     clasificacion = fields.Selection(
@@ -44,13 +44,13 @@ class Presupuesto(models.Model):
     categoria_director_id = fields.Many2one(
         comodel_name="res.partner.category",
         string="Categoría director",
-        default=lambda self: self.env.ref("peliculas.category_director")
+        default=lambda self: self.env.ref("peliculas.category_director"),
     )
     actor_ids = fields.Many2many(comodel_name="res.partner", string="Actores")
     categoria_actor_id = fields.Many2one(
         comodel_name="res.partner.category",
         string="Categoría actor",
-        default=lambda self: self.env.ref("peliculas.category_actor")
+        default=lambda self: self.env.ref("peliculas.category_actor"),
     )
     genero_ids = fields.Many2many(comodel_name="genero", string="Género(s)")
     vista_general = fields.Text(string="Descripción")
@@ -85,14 +85,16 @@ class Presupuesto(models.Model):
     detalle_ids = fields.One2many(
         comodel_name="presupuesto.detalle",
         inverse_name="presupuesto_id",
-        string='Detalles')
+        string="Detalles",
+    )
 
     campos_ocultos = fields.Boolean(string="Campos ocultos")
 
     currency_id = fields.Many2one(
         comodel_name="res.currency",
         string="Moneda",
-        default=lambda self: self.env.company.currency_id.id,)
+        default=lambda self: self.env.company.currency_id.id,
+    )
 
     terminos = fields.Text(string="Términos")
     base = fields.Monetary(string="Base imponible", compute="_compute_total")
@@ -158,34 +160,38 @@ class Presupuesto(models.Model):
         else:
             self.dsc_clasificacion = False
 
+
 class PresupuestoDetalle(models.Model):
     _name = "presupuesto.detalle"
 
-    presupuesto_id = fields.Many2one(comodel_name="presupuesto",
-        string="Presupuesto",)
+    presupuesto_id = fields.Many2one(
+        comodel_name="presupuesto",
+        string="Presupuesto",
+    )
 
-    name = fields.Many2one(comodel_name="recurso.cinematografico",string="Recurso")
+    name = fields.Many2one(comodel_name="recurso.cinematografico", string="Recurso")
 
     descripcion = fields.Char(string="Descripción", related="name.descripcion")
     precio = fields
-    contacto_id = fields.Many2one(comodel_name="res.partner",
-        string="Contacto",
-        related="name.contacto_id")
+    contacto_id = fields.Many2one(
+        comodel_name="res.partner", string="Contacto", related="name.contacto_id"
+    )
     imagen = fields.Binary(string="Imagen", related="name.imagen")
-    cantidad = fields.Float(string="Cantidad", default=1.0, digits=(16,4))
-    precio = fields.Float(string="Precio", digits='Product Price')
+    cantidad = fields.Float(string="Cantidad", default=1.0, digits=(16, 4))
+    precio = fields.Float(string="Precio", digits="Product Price")
     importe = fields.Monetary(string="Importe")
 
     currency_id = fields.Many2one(
         comodel_name="res.currency",
         string="Moneda",
-        related="presupuesto_id.currency_id")
+        related="presupuesto_id.currency_id",
+    )
 
-    @api.onchange('name')
+    @api.onchange("name")
     def _onchange_name(self):
         if self.name:
             self.precio = self.name.precio
 
-    @api.onchange('cantidad','precio')
+    @api.onchange("cantidad", "precio")
     def _onchange_importe(self):
         self.importe = self.cantidad * self.precio
