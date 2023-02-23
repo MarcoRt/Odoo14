@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_cine_form" model="ir.ui.view">
+		<field name='name'>Vista formulario de cines</field>
+		<field name='model'>cine</field>
+		<field name="arch" type="xml">
+			<form>
+				<header>
+					<button string="Aprobar" type="object" name='aprobar_cine' class='oe_highlight' states = 'borrador'/>
+					<button string="Cancelar" type='object' name='cancelar_cine' states = 'borrador,aprobado'/>
+					<field name='state' widget='statusbar' statusbar_visible='borrador,aprobado'/>
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="salas"/>
+						</group>
+						<group>
+							<field name="fecha_aprobado"/>
+							<field name="fecha_creacion"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+</odoo>

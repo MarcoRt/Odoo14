@@ -32,3 +32,11 @@ class Cine(models.Model):
         string="Estados",
         copy=False,
     )
+    def aprobar_cine(self):
+        logger.info("Se cambió el state a aprobado")
+        self.state = "aprobado"
+        self.fecha_aprobado = fields.Datetime.now()
+
+    def cancelar_cine(self):
+        logger.info("Se cambió el state a cancelado")
+        self.state = "cancelado"

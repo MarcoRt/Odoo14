@@ -13,5 +13,6 @@ Modulo para relacionar cines y películas.
 ======================================
 
     """,
-    'data': ['views/menu.xml'],
+    'data': ['views/menu.xml',
+            'views/cine_views.xml'],
 }
