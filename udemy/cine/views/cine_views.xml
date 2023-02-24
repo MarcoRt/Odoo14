@@ -58,4 +58,23 @@
 			</tree>
 		</field>
 	</record>
+	<record id="view_presupuesto_cine_form" model="ir.ui.view">
+		<field name="name">Vista lista de cines en los presupuestos</field>
+		<field name="model">presupuesto</field>
+		<field name="inherit_id" ref="peliculas.view_presupuesto_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook[last()]" position="inside">
+						<page string="Peliculas">
+							<field name="cines_ids" domain="[('state','=','aprobado')]">
+								<tree>
+									<control>
+										<create name="add_theater_control" string="Agregar cine"/>
+									</control>
+									<field name="name"/>
+								</tree>
+							</field>
+						</page>
+			</xpath>
+		</field>
+	</record>
 </odoo>
